@@ -10,45 +10,12 @@ from matplotlib.widgets import RadioButtons
 from matplotlib.widgets import TextBox
 from BertnPoly import *
 
-def addButtonClicked(event):
-        spir.spin(radiobuttons_color.value_selected)
+def addButtonClicked(event = 0):
         ax.clear()
-        #ax.plot(spir.x, spir.y, spir.z)
-        pylab.draw()
-
-
-def textSubmited(text):
-        spir.deg = int(text)
-
-
-def main():
-
-
-        P = [[3, 0, 6],
-             [0, 8, 0],
-             [-10, 0, 3]]
-
-        
+        P = np.loadtxt("input.txt")
         answer = GetBernPoly(P)
-
         u = sympy.Symbol('u')
         v = sympy.Symbol('v')
-        mpl.rcParams['legend.fontsize'] = 10
-        global fig, ax
-        fig, ax = pylab.subplots()
-        ax = fig.gca(projection='3d')
-
-
-        axes_button_add = pylab.axes([0.7, 0.05, 0.25, 0.075])
-
-        button_add = Button(axes_button_add, 'Вращать!')
-        button_add.on_clicked(addButtonClicked)
-
-
-
-
-        axbox = pylab.axes([0.85, 0.15, 0.1, 0.1])
-
         d1 = np.arange(0, 1, 0.01)
         d2 = np.arange(0, 1, 0.01)
         X, Y = np.meshgrid(d1, d2)
@@ -62,6 +29,25 @@ def main():
 
         ax.plot_wireframe(X, Y, Z, rstride=10, cstride=10)
         ax.legend()
+        pylab.draw()
+
+
+def textSubmited(text):
+        spir.deg = int(text)
+
+
+def main():
+
+        
+        
+        mpl.rcParams['legend.fontsize'] = 10
+        global fig, ax
+        fig, ax = pylab.subplots()
+        ax = fig.gca(projection='3d')
+        axes_button_add = pylab.axes([0.7, 0.05, 0.25, 0.075])
+        button_add = Button(axes_button_add, 'Перестроить!')
+        button_add.on_clicked(addButtonClicked)
+        addButtonClicked()
         pylab.show()
 
 
